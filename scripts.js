@@ -5,5 +5,25 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
   const entries = new FormData(event.target);
   const { dividend, divider } = Object.fromEntries(entries);
-  result.innerText = dividend / divider;
+  const firstInput = parseFloat(dividend); // Makes the number recognized by js
+  const secondInput = parseFloat(divider); // Makes the number recognized by js
+  if (!dividend || !divider) {
+    result.innerText =
+      "Division not performed. Both values are required in inputs. Try again";
+  } else {
+    try {
+      if (!secondInput || !firstInput || secondInput === 0) {
+        throw new Error("Division by zero or invalid input");
+      }
+      const answer = firstInput / secondInput;
+      result.innerText = Math.floor(answer); // Number rounded down
+    } catch (error) {
+      console.error(
+        "Division not performed. Invalid number provided. Try again",
+        error
+      );
+      result.innerText =
+        "Division not performed. Invalid number provided. Try again";
+    }
+  }
 });
